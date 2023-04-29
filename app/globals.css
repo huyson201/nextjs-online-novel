@@ -6,6 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --navbar-height: 50px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,11 +18,17 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply text-dark bg-body-bg;
+}
+
+.nav-menu-scrollbar::-webkit-scrollbar{
+  @apply w-1.5;
+}
+
+.nav-menu-scrollbar::-webkit-scrollbar-track{
+  @apply bg-[#f1f1f1] rounded-md;
+}
+
+.nav-menu-scrollbar::-webkit-scrollbar-thumb{
+  @apply bg-[#c1c1c1] hover:bg-[#a8a8a8] transition-all duration-200 rounded-md;
 }

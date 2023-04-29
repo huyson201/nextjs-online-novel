@@ -1,0 +1,110 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Bookcase {
+  userId    Int
+  bookId    Int
+  chapterId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  books     Book     @relation(fields: [bookId], references: [id], map: "BookCase_bookId_fkey")
+  chapters  Chapter  @relation(fields: [chapterId], references: [id], map: "BookCase_chapterId_fkey")
+  users     User     @relation(fields: [userId], references: [id], map: "BookCase_userId_fkey")
+
+  @@id([userId, bookId])
+  @@index([bookId], map: "BookCase_bookId_fkey")
+  @@index([chapterId], map: "BookCase_chapterId_fkey")
+  @@map("bookcase")
+}
+
+model Book {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(255)
+  slug        String     @unique @db.VarChar(255)
+  image       String     @default("")
+  state       String     @default("Đang tiến hành") @db.VarChar(100)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  author      String     @default("Đang cập nhật") @db.VarChar(100)
+  desc        String     @default("")
+  translator  String     @default("Đang cập nhật") @db.VarChar(100)
+  view_counts Int        @default(0)
+  vip         Int        @default(0)
+  bookcase    Bookcase[]
+  chapters    Chapter[]
+  recommends  Recommend?
+  sliders     Slider?
+  categories  Category[] @relation("booktocategory")
+
+  @@index([title, slug])
+  @@fulltext([title])
+  @@map("books")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  slug      String   @unique @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  books     Book[]   @relation("booktocategory")
+
+  @@index([slug])
+  @@map("categories")
+}
+
+model Chapter {
+  id            Int        @id @default(autoincrement())
+  title         String     @db.VarChar(255)
+  chapterNumber Float
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+  bookId        Int
+  content       String     @db.Text
+  bookcase      Bookcase[]
+  books         Book       @relation(fields: [bookId], references: [id])
+
+  @@index([bookId], map: "chapters_bookId_fkey")
+  @@fulltext([title])
+  @@map("chapters")
+}
+
+model Recommend {
+  id        Int      @id @default(autoincrement())
+  bookId    Int      @unique(map: "Recommend_bookId_key")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  book      Book     @relation(fields: [bookId], references: [id], map: "Recommend_bookId_fkey")
+
+  @@map("recommends")
+}
+
+model Slider {
+  id        Int      @id @default(autoincrement())
+  bookId    Int      @unique(map: "Slider_bookId_key")
+  bannerImg String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  book      Book     @relation(fields: [bookId], references: [id], map: "Slider_bookId_fkey")
+
+  @@map("sliders")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String     @db.VarChar(250)
+  email     String     @unique
+  password  String     @db.VarChar(250)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime
+  bookcase  Bookcase[]
+
+  @@map("users")
+}
