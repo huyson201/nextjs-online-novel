@@ -3,6 +3,9 @@ import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper'
 import Link from 'next/link';
+import Tag from '../common/Tag';
+import { getStringEllipsis } from '@/helpers/commom';
+import { Book } from '@/types/Book';
 
 interface Props {
     books: Book[]
@@ -33,13 +36,13 @@ export default function HorizontalList({ books }: Props) {
                                 <div className='relative '>
                                     <div className='relative' >
                                         <img className='w-full rounded-lg h-full object-cover' src={`https://cdntv.techflash.net/${book.image}`} alt={book.title} loading='lazy' />
-                                        <div className='absolute top-0 left-0'>
-                                            <span>Full</span>
+                                        <div className='absolute top-0 left-0 p-2'>
+                                            <Tag background='success' color='white' title='Full' />
                                         </div>
                                     </div>
                                     <div className=' opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex  flex-col rounded-lg p-2 absolute w-full h-full bg-dark/90 top-0 left-0'>
                                         <div className='text-white font-semibold text-base  md:text-xl line-clamp-3 overflow-hidden text-ellipsis'>
-                                            {book.title}
+                                            {getStringEllipsis(book.title, 48)}
                                         </div>
                                         <div className='mt-auto'>
                                             {book.categories.length > 0 && (
@@ -52,8 +55,8 @@ export default function HorizontalList({ books }: Props) {
                                                 </div>
                                             )}
 
-                                            <div className='text-white hidden md:block line-clamp-4 text-ellipsis overflow-hidden'>
-                                                {getTextFromHtml(book.desc)}
+                                            <div className='text-white hidden md:block line-clamp-3 text-ellipsis overflow-hidden'>
+                                                {getStringEllipsis(getTextFromHtml(book.desc))}
                                             </div>
                                         </div>
                                     </div>

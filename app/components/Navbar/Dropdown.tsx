@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
@@ -27,7 +25,6 @@ const Dropdown = ({ title, children }: Props) => {
 
         window.addEventListener("click", handleClickOutside)
         return () => {
-            console.log("remove event")
             window.removeEventListener("click", handleClickOutside)
         }
     }, [])
@@ -47,19 +44,6 @@ const Dropdown = ({ title, children }: Props) => {
             <div className='bg-white pb-2 hidden group-[.active]:block lg:absolute lg:top-[calc(100%_+_14px)] lg:left-0 
                                               lg:shadow-sm'>
                 <Wrapper className='lg:py-2 lg:px-2'>
-                    {/* <div className='flex flex-wrap'>
-                        {
-                                            categories.map(cate => (
-                                                <Link className='inline-block w-2/4 sm:w-auto sm:px-2 py-2 text-xs hover:text-primary duration-200 lg:w-1/3' key={cate.slug} href={`/the-load` + cate.slug} >
-                                                    <div >
-                                                        {cate.name}
-                                                    </div>
-                                                </Link>
-
-                                            ))
-                                        }
-                    </div> */}
-
                     {children}
                 </Wrapper>
             </div>

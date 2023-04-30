@@ -7,3 +7,4 @@ function createErrorResponse(error: any, status: number = 500) {
 }
 
 export default createErrorResponse
+

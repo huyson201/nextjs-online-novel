@@ -32,3 +32,9 @@ body {
 .nav-menu-scrollbar::-webkit-scrollbar-thumb{
   @apply bg-[#c1c1c1] hover:bg-[#a8a8a8] transition-all duration-200 rounded-md;
 }
+
+@layer utilities{
+  .section-title{
+    @apply mb-6 text-2xl md:text-3xl font-bold;
+  }
+}

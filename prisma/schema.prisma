@@ -29,7 +29,7 @@ model Book {
   title       String     @db.VarChar(255)
   slug        String     @unique @db.VarChar(255)
   image       String     @default("")
-  state       String     @default("Đang tiến hành") @db.VarChar(100)
+  state       String     @default("in progress") @db.VarChar(100)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @default(now())
   author      String     @default("Đang cập nhật") @db.VarChar(100)

@@ -1,5 +1,7 @@
+export type BookState = "in progress" | "completed"
+export type PersonState = string | "updating"
 
-interface Slide {
+export interface Slide {
     id: number,
     bookId: number,
     bannerImg: string,
@@ -11,15 +13,16 @@ interface Slide {
     }
 }
 
-interface Book {
+export interface Book {
     id: number,
     title: string,
     slug: string,
     image: string
-    state: string
+    state: BookState
     createdAt: string
     updatedAt: string
-    author: string
+    author: PersonState
+    translator: PersonState
     content: string
     desc: string
     view_counts: number,
